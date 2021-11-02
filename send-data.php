@@ -13,7 +13,7 @@
         );
 
     // User data to send using HTTP POST method in curl
-    $data = array('name'=>'New User 123','salary'=>'65000', 'age' => '33');
+    $data = array('fecha'=>$fecha,'hora'=>$hora, 'tipo' => $tipo, 'capacidad'=>$capacidad);
 
     // Data should be passed as json format
     $data_json = json_encode($data);
@@ -32,7 +32,7 @@
     curl_setopt($ch, CURLOPT_POST, 1);
 
     // Pass user data in POST command
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $info);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
