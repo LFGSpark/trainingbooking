@@ -45,6 +45,6 @@
     // See response if data is posted successfully or any error
     print_r ($response);
 
-    header("Location: index.php");
+    //header("Location: index.php");
 
 ?>
