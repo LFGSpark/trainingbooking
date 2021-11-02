@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Booking</title>
 </head>
 <body>
     <h1>Book a demo class</h1>
@@ -13,7 +13,7 @@
 
     <form method="POST" action="send-data.php">
         <label>Fecha</label>
-        <input type="date" name="fecha">
+        <input name="fecha" type="date">
 
         <label>Hora</label>
         <input name="hora" type="time">

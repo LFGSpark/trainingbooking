@@ -17,4 +17,6 @@
     $jsonResponse = rest_call("POST", $url, $string, 'application/x-www-form-urlencoded');
     $response = json_decode($jsonResponse);
 
+    header("Location: index.php");
+
 ?>
