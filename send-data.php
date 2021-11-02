@@ -12,39 +12,38 @@
         'capacidad'=> $capacidad
         );
 
-        $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita";
-        
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    // User data to send using HTTP POST method in curl
+    $data = array('name'=>'New User 123','salary'=>'65000', 'age' => '33');
 
-        $headers = array(
-            "Accept: application/json",
-            "Content-Type: application/json",
-         );
-        
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        
-        $data = <<<DATA
-        {
-          "fecha": "2021-11-05",
-          "hora": "22:00:00",
-          "tipo": bike,
-          "capacidad": 1
-        }
-        DATA;
+    // Data should be passed as json format
+    $data_json = json_encode($data);
 
+    // API URL to send data
+    $url = 'https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita';
 
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        
-        //for debug only!
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        
-        $resp = curl_exec($curl);
-        curl_close($curl);
-        var_dump($resp);
+    // curl initiate
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+
+    // SET Method as a POST
+    curl_setopt($ch, CURLOPT_POST, 1);
+
+    // Pass user data in POST command
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $info);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Execute curl and assign returned data
+    $response  = curl_exec($ch);
+
+    // Close curl
+    curl_close($ch);
+
+    // See response if data is posted successfully or any error
+    print_r ($response);
 
     header("Location: index.php");
 
