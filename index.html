@@ -8,21 +8,28 @@
 </head>
 <body>
     <h1>Book a demo class</h1>
+
+    <div class="container"></div>
+
     <form method="POST" action="send-data.php">
         <label>Fecha</label>
-        <input tipe="date">
+        <input type="date" name="fecha">
 
         <label>Hora</label>
-        <input tipe="time">
+        <input name="hora" type="time">
 
-        <select>
+        <label>Capacidad</label>
+        <select name="tipo">
             <option value="bike">bike</option>
             <option value="ems">ems</option>
         </select>
 
         <label>Capacidad</label>
-        <input tipe="number">
+        <input name="capacidad" type="number">
 
+        <input type="submit">
     </form>
+
+    </div>
 </body>
 </html>
