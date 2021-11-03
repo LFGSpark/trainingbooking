@@ -8,39 +8,33 @@
     $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita";
 
     $data_array = array(
-        'fecha' => '2021-11-02',
-        'hora' => '16:00:00',
-        'tipo' => 'bike',
-        'capacidad' => '1'
+        "fecha" => "2021-11-05",
+        "hora" => "17:00:00",
+        "tipo" => "bike",
+        "capacidad" => 1
     );
 
-    $data = http_build_query($data_array);
+    $ch = curl_init($url);
 
-    $ch = curl_init();
+    curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+            'accept:application/json',
+            'accept-encoding:gzip, deflate',
+            'accept-language:en-US,en;q=0.8',
+            'content-type:application/json',
+            'user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36'
+        )
+    );
 
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_array);
 
-    $headers = array(
-        'Content-type: application/json'
-    );
-
-    curl_setopt($ch, CURLTOP_HTTPHEADER, $headers);
-
-    $resp = curl_exec($ch);
-
-    if($e = curl_exec($ch)) {
-        echo $e;
-    }
-    else {
-        $decoded = json_decode($resp);
-        foreach($decoded as $key => $val){
-            echo $key . ': ' . $val . '<br>';
-        }
-    }
-
+    $result = curl_exec($ch);
     curl_close($ch);
+
 
 ?>
