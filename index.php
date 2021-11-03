@@ -11,7 +11,7 @@
 
     <div class="container"></div>
 
-    <form method="POST" action="send-data.php">
+    <form action="send-data.php" method="POST">
         <label>Fecha</label>
         <input name="fecha" type="date">
 
