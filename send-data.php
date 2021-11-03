@@ -5,46 +5,40 @@
     $tipo = $_POST['tipo'];
     $capacidad = $_POST['capacidad'];
 
-    $info = array(
-        'fecha'=> $fecha,
-        'hora'=> $hora,
-        'tipo'=> $tipo,
-        'capacidad'=> $capacidad
-        );
+    
 
-    // User data to send using HTTP POST method in curl
-    $data = array('fecha'=>$fecha,'hora'=>$hora, 'tipo' => $tipo, 'capacidad'=>$capacidad);
+    
 
-    // Data should be passed as json format
-    $data_json = json_encode($data);
+    $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita";
 
-    // API URL to send data
-    $url = 'https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita';
+    $data_array = array(
+        'fecha' => '2021-11-02',
+        'hora' => '16:00:00',
+        'tipo' => 'bike',
+        'capacidad' => '1'
+    );
 
-    // curl initiate
+    $data = http_build_query($data_array);
+
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, $url);
-
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-    // SET Method as a POST
-    curl_setopt($ch, CURLOPT_POST, 1);
-
-    // Pass user data in POST command
+    curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-    // Execute curl and assign returned data
-    $response  = curl_exec($ch);
+    $resp = curl_exec($ch);
 
-    // Close curl
+    if($e = curl_exec($ch)) {
+        echo $e;
+    }
+    else {
+        $decoded = json_decode($resp);
+        foreach($decoded as $key => $val){
+            echo $key . ': ' . $val . '<br>';
+        }
+    }
+
     curl_close($ch);
-
-    // See response if data is posted successfully or any error
-    print_r ($response);
-
-    //header("Location: index.php");
 
 ?>
