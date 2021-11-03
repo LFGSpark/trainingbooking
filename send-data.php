@@ -1,16 +1,18 @@
 <?php
 
-    $fecha = $hora = $tipo = $capacidad = $fields_string = "";
+    $fecha = $hora = $tipo = $capacidad = $nombre = $fields_string = "";
 
     $fecha = $_POST['fecha'];
     $hora = $_POST['hora'];
     $tipo = $_POST['tipo'];
     $capacidad = $_POST['capacidad'];
+    $nombre = $_POST['nombre'];
 
     $horaCF = $hora . ":00";
+    $nombre = str_replace(' ','-', $nombre);
 
 
-    $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita?fecha=".$fecha."&hora=".$horaCF."&tipo=ems&capacidad=4";
+    $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita?fecha=".$fecha."&hora=".$horaCF."&tipo=".$tipo."&capacidad=".$capacidad."&nombre=".$nombre;
     
     $fields = array(
         'fecha' => urlencode($_POST['fecha']),
