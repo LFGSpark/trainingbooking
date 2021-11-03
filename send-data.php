@@ -5,10 +5,6 @@
     $tipo = $_POST['tipo'];
     $capacidad = $_POST['capacidad'];
 
-    
-
-    
-
     $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita";
 
     $data_array = array(
@@ -26,6 +22,12 @@
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $headers = array(
+        'Content-type: application/json'
+    );
+
+    curl_setopt($ch, CURLTOP_HTTPHEADER, $headers);
 
     $resp = curl_exec($ch);
 
