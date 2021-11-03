@@ -5,14 +5,8 @@
     $tipo = $_POST['tipo'];
     $capacidad = $_POST['capacidad'];
 
-    $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita";
-
-    $data_array = array(
-        "fecha" => "2021-11-05",
-        "hora" => "17:00:00",
-        "tipo" => "bike",
-        "capacidad" => 1
-    );
+    $url = "https://personal-hezqtnbk.outsystemscloud.com/GymBooking/rest/Entrenamientos/CrearCita
+            ?fecha=" . $fecha . "&hora=" . $hora . "&tipo=" . $tipo . "&capacidad=" . $capacidad;
 
     $ch = curl_init($url);
 
@@ -28,13 +22,20 @@
         )
     );
 
+    curl_setopt($ch,CURLOPT_POST, true);  
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_array);
+    //curl_setopt($ch, CURLOPT_POSTFIELDS, $data_array);
 
     $result = curl_exec($ch);
+
+    print_r($result);
     curl_close($ch);
+    print_r($fecha);
+    print_r($hora);
+    print_r($tipo);
+    print_r($capacidad);
 
 
 ?>
