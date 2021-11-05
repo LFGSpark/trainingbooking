@@ -9,9 +9,16 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1>Book a demo class</h1>
+<div class="container">
+    <p class="form-title1">Registrar Clase Demo</p>    
+
+    <div class="form-container">
+
         <form class="form" action="send-data.php" method="POST">
+
+            <label class="form-label">Nombre</label>
+            <input class="form-field" name="nombre" type="text" placeholder="Participante" required>
+
             <label class="form-label">Fecha</label>
             <input class="form-field" name="fecha" type="date" required>
 
@@ -24,14 +31,10 @@
                 <option value="ems">ems</option>
             </select>
 
-            <label class="form-label">Capacidad</label>
-            <input class="form-field" name="capacidad" type="number" required>
-
-            <label class="form-label">Nombre</label>
-            <input class="form-field" name="nombre" type="text" required>
-
-            <input class="form-btn" type="submit" value="Registrar">
+            <input class="form-btn" type="submit" value="Registrar Clase" />
         </form>
     </div>
+</div>
+    
 </body>
 </html>
