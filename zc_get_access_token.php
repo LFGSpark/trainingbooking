@@ -1,11 +1,11 @@
 <?php
 
-$client_id = '1000.DV923KJIAP1UI51RA0O8S8DXTSOM2F';
-$client_secret = '9e7a518438be1cfb749a2bb6ce92fcfa679f20c67b';
-$code = '1000.3297b3114a0a30e2bc160c7afe324d91.7083d44f9cc1b8462260300bd20347cb';
+$client_id = '1000.TQ9N21TT4Z1ZX46AV2NXVLXENTVH8E';
+$client_secret = '9e4892bf7921c1936d3b630bddf472ff64f5a0e44e';
+$api_code = '1000.09c50ab7839e397087ce5690645b38aa.a27203294fe32a83d7ba57a839b55fa0';
 $base_acc_url = 'https://accounts.zoho.com';
 
-$token_url =  $base_acc_url . '/oauth/v2/token?grant_type=authorization_code&client_id=' . $client_id. '&client_secret=' . $client_secret . '&redirect_uri=http://localhost&code=' . $code;
+$token_url =  $base_acc_url . '/oauth/v2/token?grant_type=authorization_code&client_id=' . $client_id. '&client_secret=' . $client_secret . '&redirect_uri=http://localhost&code=' . $api_code;
 
 
 //FUNCION PARA GENERAR ACCESS TOKEN Y REFRESH TOKEN
@@ -19,10 +19,10 @@ function generate_refresh_token($url){
     return $result;
 }
 
-$datos = generate_refresh_token($token_url);
+//$datos = generate_refresh_token($token_url);
 
-//$refresh_token = '1000.1f06dddc483a2bc04c28fa3be17c9fb7.9e27cbc2e662d2ed1e29101ce80dda2b';
-//$access_token_url = $base_acc_url.'/oauth/v2/token?refresh_token='.$refresh_token.'&client_id='.$client_id.'&client_secret='.$client_secret.'&grant_type=refresh_token';
+$refresh_token = '1000.cf51e9929b6940651bbdda7ee972247b.268e005ad4b0dad3fe4e5decb0c4d080';
+$access_token_url = $base_acc_url.'/oauth/v2/token?refresh_token='.$refresh_token.'&client_id='.$client_id.'&client_secret='.$client_secret.'&grant_type=refresh_token';
 
 //FUNCION PARA REFRESCAR ACCESS TOKEN
 function refresh_access_token($url){
@@ -35,8 +35,8 @@ function refresh_access_token($url){
     return $result;
 }
 
-//$access_token = refresh_access_token($access_token_url);
-//$access_token = json_decode($access_token);
+$access_token = refresh_access_token($access_token_url);
+$access_token = json_decode($access_token);
 
 ?>
 
@@ -61,7 +61,9 @@ function refresh_access_token($url){
                 <div class="output">
                     <div class="output-text">
                         <?php
-                            print $datos;
+                            foreach($access_token as $item){
+                                echo $item . "<br />";
+                            }
                         ?>
                     </div>
                 </div>

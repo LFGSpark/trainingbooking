@@ -31,7 +31,7 @@ function create_user_record($access_token, $nombre, $correo, $suscripcion){
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-    $result = curl_exec($ch);
+    $result = json_decode(curl_exec($ch));
     curl_close($ch);
     return $result;
 }
@@ -59,7 +59,7 @@ function create_booking_record($access_token, $tipo, $fecha, $hora){
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-    $result = curl_exec($ch);
+    $result = json_decode(curl_exec($ch));
     curl_close($ch);
     return $result;
 }
@@ -68,9 +68,45 @@ function create_booking_record($access_token, $tipo, $fecha, $hora){
 $result_user_record = create_user_record($access_token, $nombre, $correo, $suscripcion);
 $result_booking_record = create_booking_record($access_token, $tipo, $fecha, $hora);
 
+//ASIGNACION DE VALOR A VARIABLES 'ID_booking' y 'ID_user'
+foreach($result_booking_record->data as $item){
+    $ID_booking = $item;
+}
+
+foreach($result_user_record->data as $item){
+    $ID_user = $item;
+}
+
+//FUNCION PARA AÑADIR PARTICIPANTE A ENTRENAMIENTO
+function create_assistant_record($access_token, $ID_booking, $ID_user){
+
+    $service_url = $GLOBALS['service_url'] . '/api/v2/chispas/training-bookings/form/Asistentes';
+    $data = array("data" => array("Entrenamiento_ID_field" => $ID_booking, "Usuario_field" => $ID_user));
+    $header = array(
+        'Authorization: Zoho-oauthtoken ' . $access_token, 
+        'Content-Type: application/json',
+        'environment: development'
+    );
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $service_url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
+}
+
+$result_assistant_record = create_assistant_record($access_token, $ID_booking, $ID_user);
+
 //IMPRESION DE RESULTADOS PARA DEBUG
-print_r($result_booking_record);
 print_r($result_user_record);
+echo '<br />';
+print_r($result_booking_record);
+echo '<br />';
+print_r($result_assistant_record);
 
 //header('Location: ' . $_SERVER['HTTP_REFERER'])
 
