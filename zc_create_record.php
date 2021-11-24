@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 //DECLARACION VARIABLES
 $access_token = $_POST['access_token'];
 $nombre = $_POST['nombre'];
@@ -36,8 +38,16 @@ function create_user_record($access_token, $nombre, $correo, $suscripcion){
     return $result;
 }
 
+//EJECUCION DE FUNCION
+$result_user_record = create_user_record($access_token, $nombre, $correo, $suscripcion);
+
+//ASIGNACION DE VALOR A VARIABLE 'ID_user'
+foreach($result_user_record->data as $item){
+    $ID_user = $item;
+}
+
 //FUNCION PARA HACER INSERT EN LA TABLA "Entrenamientos"
-function create_booking_record($access_token, $tipo, $fecha, $hora){
+function create_booking_record($access_token, $tipo, $fecha, $hora, $ID_user){
 
     if($tipo == "BIKE"){
         $capacidad = 1;
@@ -46,7 +56,7 @@ function create_booking_record($access_token, $tipo, $fecha, $hora){
     }
 
     $service_url = $GLOBALS['service_url'] . '/api/v2/chispas/training-bookings/form/Entrenamientos';
-    $data = array("data" => array("Tipo_field" => $tipo, "Date_field" => $fecha, "Time_field" => $hora, "Capacidad_field" => $capacidad));
+    $data = array("data" => array("Tipo_field" => $tipo, "Date_field" => $fecha, "Time_field" => $hora, "Capacidad_field" => $capacidad, "Usuario_field" => $ID_user));
     $header = array(
         'Authorization: Zoho-oauthtoken ' . $access_token, 
         'Content-Type: application/json',
@@ -62,19 +72,6 @@ function create_booking_record($access_token, $tipo, $fecha, $hora){
     $result = json_decode(curl_exec($ch));
     curl_close($ch);
     return $result;
-}
-
-//EJECUCION DE FUNCIONES
-$result_user_record = create_user_record($access_token, $nombre, $correo, $suscripcion);
-$result_booking_record = create_booking_record($access_token, $tipo, $fecha, $hora);
-
-//ASIGNACION DE VALOR A VARIABLES 'ID_booking' y 'ID_user'
-foreach($result_booking_record->data as $item){
-    $ID_booking = $item;
-}
-
-foreach($result_user_record->data as $item){
-    $ID_user = $item;
 }
 
 //FUNCION PARA AÑADIR PARTICIPANTE A ENTRENAMIENTO
@@ -99,14 +96,32 @@ function create_assistant_record($access_token, $ID_booking, $ID_user){
     return $result;
 }
 
-$result_assistant_record = create_assistant_record($access_token, $ID_booking, $ID_user);
+//EJECUCION DE FUNCION
+$result_booking_record = create_booking_record($access_token, $tipo, $fecha, $hora, $ID_user);
+
+//ASIGNACION DE VALOR A VARIABLES 'ID_booking'
+
+//foreach($result_booking_record->data as $item){
+//    $ID_booking = $item;
+//}
+
+//$result_assistant_record = create_assistant_record($access_token, $ID_booking, $ID_user);
 
 //IMPRESION DE RESULTADOS PARA DEBUG
+echo '<br />';
 print_r($result_user_record);
 echo '<br />';
 print_r($result_booking_record);
 echo '<br />';
-print_r($result_assistant_record);
+//print_r($result_assistant_record);
+echo '<br />';
+
+//ERROR HANDLING BOOKING RECORD
+//foreach($result_booking_record->error as $text){
+//    $error = $text;
+//}
+//$error_booking_record = get_object_vars($error);
+//print_r($error_booking_record['message']);
 
 //header('Location: ' . $_SERVER['HTTP_REFERER'])
 

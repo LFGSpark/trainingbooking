@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $client_id = '1000.TQ9N21TT4Z1ZX46AV2NXVLXENTVH8E';
 $client_secret = '9e4892bf7921c1936d3b630bddf472ff64f5a0e44e';
 $api_code = '1000.09c50ab7839e397087ce5690645b38aa.a27203294fe32a83d7ba57a839b55fa0';
@@ -35,8 +37,12 @@ function refresh_access_token($url){
     return $result;
 }
 
+//DESACTIVADO PARA QUE NO SE GASTEN CRÉDITOS DE ACCESO DE API (250 DIARIOS)
+//ACTIVAR SOLO CUANDO SE NECESITE UN NUEVO CODIGO (EL CÓDIGO DURA UNA HORA)
 $access_token = refresh_access_token($access_token_url);
 $access_token = json_decode($access_token);
+$respuesta = get_object_vars($access_token);
+$_SESSION['access_token_code'] = $respuesta['access_token'];
 
 ?>
 
@@ -58,15 +64,26 @@ $access_token = json_decode($access_token);
         <div class="form-container">
             <form class="form" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
 
-                <div class="output">
-                    <div class="output-text">
-                        <?php
-                            foreach($access_token as $item){
-                                echo $item . "<br />";
-                            }
-                        ?>
-                    </div>
+                <div class="form-group">
+                    <label class="form-label">access_token</label>
+                    <input class="form-field" name="access_token" type="text" value=" <?php print_r($respuesta['access_token']); ?>" />
                 </div>
+
+                <div class="form-group">
+                    <label class="form-label">expires_in</label>
+                    <input class="form-field" name="expires_in" type="text" value=" <?php print_r($respuesta['expires_in']); ?>" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">api_domain</label>
+                    <input class="form-field" name="api_domain" type="text" value=" <?php print_r($respuesta['api_domain']); ?>" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">token_type</label>
+                    <input class="form-field" name="token_type" type="text" value=" <?php print_r($respuesta['token_type']); ?>" />
+                </div>
+
                 <input class="form-btn" type="submit" value="Generar" />
             </form>
         <div>

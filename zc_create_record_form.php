@@ -1,3 +1,9 @@
+<?php
+
+    session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,13 +18,13 @@
     <?php include "nav.html"?>
 
     <div class="container">
-        <p class="form-title1">Registrar Usuario</p>    
+        <p class="form-title1">Registrar Entrenamiento</p>    
         <div class="form-container">
             <form class="form" action="zc_create_record.php" method="POST">
 
                 <div class="form-group">
                     <label class="form-label">Access Token</label>
-                    <input class="form-field" name="access_token" type="text" placeholder="" />
+                    <input class="form-field" name="access_token" type="text" value="<?php echo $_SESSION['access_token_code']; ?>"/>
                 </div>
             
                 <div class="form-group">
@@ -58,7 +64,7 @@
                     <input class="form-field" name="hora" type="time" />
                 </div>
 
-                <input class="form-btn" type="submit" value="Registrar Usuario" />
+                <input class="form-btn" type="submit" value="Registrar Entrenamiento" />
             </form>
         <div>
         
